@@ -2,7 +2,7 @@ import Image from 'next/image'
 import type { AppProps } from 'next/app'
 import { globalStyles } from '@/styles/globals'
 import logo from '../../public/appImages/FullstackerLogoBannerDarkBG.png'
-import { Container, Header } from '@/styles/pages/app'
+import { Container, Header } from '@/styles/pagesStyles/app'
 
 globalStyles()
 export default function App({ Component, pageProps }: AppProps) {
