@@ -8,6 +8,7 @@ export const {
   getCssText,
   theme,
   createTheme,
+  css,
 } = createStitches({
   theme: {
     colors: {
@@ -25,5 +26,13 @@ export const {
       xl: '1.5rem',
       '2xl': '2rem',
     },
+    display: {
+      flex: 'flex',
+      none: 'none',
+      block: 'block',
+    },
+  },
+  utils: {
+    display: (value: string) => ({ display: value }),
   },
 })

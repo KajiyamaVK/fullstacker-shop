@@ -5,7 +5,13 @@ import {
   ProductContainer,
   ProductDetails,
 } from '@/styles/pagesStyles/product'
+import {
+  Product,
+  CartActions,
+  CartEntry as ICartEntry,
+} from 'use-shopping-cart/core'
 import axios from 'axios'
+import { useShoppingCart } from 'use-shopping-cart'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -20,28 +26,32 @@ interface IProductProps {
     imageUrl: string
     price: string
     defaultPriceId: string
+    sku: string
   }
 }
 
-export default function Product({ product }: IProductProps) {
+export default function Product({ product }: Product) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
+
+  const { addItem, cartCount } = useShoppingCart()
   async function handleClick() {
-    try {
-      setIsCreatingCheckoutSession(true)
-      console.log('defaultPriceId', product.defaultPriceId)
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
+    const items = cartCount
+    addItem(product)
+    console.log('cartCount', cartCount)
 
-      const { checkoutUrl } = response.data
-
-      window.location.href = checkoutUrl
-    } catch (e) {
-      setIsCreatingCheckoutSession(false)
-      // Sempre se comunicar com alguma gerraamenta de observabilidade (Datadog / Sentry)
-      alert('Falha ao redirecionar ao checkout')
-    }
+    // try {
+    //   setIsCreatingCheckoutSession(true)
+    //   const response = await axios.post('/api/checkout', {
+    //     priceId: product.defaultPriceId,
+    //   })
+    //   const { checkoutUrl } = response.data
+    //   window.location.href = checkoutUrl
+    // } catch (e) {
+    //   setIsCreatingCheckoutSession(false)
+    //   // Sempre se comunicar com alguma ferramenta de observabilidade (Datadog / Sentry)
+    //   alert('Falha ao redirecionar ao checkout')
+    // }
   }
 
   const { isFallback } = useRouter()
@@ -65,7 +75,7 @@ export default function Product({ product }: IProductProps) {
           <p>{product.description}</p>
 
           <button onClick={handleClick} disabled={isCreatingCheckoutSession}>
-            Comprar agora
+            Adicionar ao Carrinho
           </button>
         </ProductDetails>
       </ProductContainer>
