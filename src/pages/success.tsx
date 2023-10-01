@@ -1,5 +1,6 @@
 import { stripe } from '@/libs/stripe'
 import { ImageContainer, SuccessContainer } from '@/styles/pagesStyles/success'
+import { useShoppingCart } from 'use-shopping-cart'
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -15,6 +16,9 @@ interface ISuccessProps {
   product: IProduct
 }
 export default function Success({ customerName, product }: ISuccessProps) {
+  const { clearCart, cartCount } = useShoppingCart()
+
+  if (cartCount && cartCount > 0) clearCart()
   return (
     <>
       <Head>

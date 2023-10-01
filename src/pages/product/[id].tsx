@@ -4,7 +4,7 @@ import {
   ImageContainer,
   ProductContainer,
   ProductDetails,
-} from '@/styles/pagesStyles/product'
+} from '@/pages/product/Components/product'
 import {
   Product,
   CartActions,
@@ -38,20 +38,6 @@ export default function Product({ product }: Product) {
   async function handleClick() {
     const items = cartCount
     addItem(product)
-    console.log('cartCount', cartCount)
-
-    // try {
-    //   setIsCreatingCheckoutSession(true)
-    //   const response = await axios.post('/api/checkout', {
-    //     priceId: product.defaultPriceId,
-    //   })
-    //   const { checkoutUrl } = response.data
-    //   window.location.href = checkoutUrl
-    // } catch (e) {
-    //   setIsCreatingCheckoutSession(false)
-    //   // Sempre se comunicar com alguma ferramenta de observabilidade (Datadog / Sentry)
-    //   alert('Falha ao redirecionar ao checkout')
-    // }
   }
 
   const { isFallback } = useRouter()
